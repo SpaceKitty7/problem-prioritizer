@@ -8,6 +8,38 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --bg-primary: #0a0a0b;
+            --bg-secondary: #18181b;
+            --bg-tertiary: #27272a;
+            --bg-input: #09090b;
+            --text-primary: #fafafa;
+            --text-secondary: #a1a1aa;
+            --text-muted: #71717a;
+            --text-dimmed: #52525b;
+            --border: #27272a;
+            --border-hover: #3f3f46;
+            --accent: #a855f7;
+            --accent-hover: #9333ea;
+            --green: #4ade80;
+            --yellow: #fcd34d;
+            --red: #ef4444;
+            --blue: #60a5fa;
+        }
+
+        .light-mode {
+            --bg-primary: #ffffff;
+            --bg-secondary: #f4f4f5;
+            --bg-tertiary: #e4e4e7;
+            --bg-input: #ffffff;
+            --text-primary: #18181b;
+            --text-secondary: #52525b;
+            --text-muted: #71717a;
+            --text-dimmed: #a1a1aa;
+            --border: #e4e4e7;
+            --border-hover: #d4d4d8;
+        }
+
         * {
             box-sizing: border-box;
             margin: 0;
@@ -16,42 +48,107 @@
 
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            background: #0a0a0b;
+            background: var(--bg-primary);
             min-height: 100vh;
-            color: #fafafa;
+            color: var(--text-primary);
             padding: 24px;
             line-height: 1.5;
+            transition: background 0.3s, color 0.3s;
         }
 
         .container {
-            max-width: 900px;
+            max-width: 1000px;
             margin: 0 auto;
         }
 
-        h1 {
-            text-align: center;
+        /* Header */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
             margin-bottom: 8px;
-            color: #fff;
+        }
+
+        h1 {
+            color: var(--text-primary);
             font-size: 2rem;
             font-weight: 700;
             letter-spacing: -0.025em;
         }
 
+        .header-actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .icon-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            border: 1px solid var(--border);
+            background: var(--bg-secondary);
+            color: var(--text-secondary);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+            transition: all 0.2s;
+        }
+
+        .icon-btn:hover {
+            border-color: var(--border-hover);
+            color: var(--text-primary);
+        }
+
         .subtitle {
-            text-align: center;
-            color: #71717a;
+            color: var(--text-muted);
             margin-bottom: 32px;
             font-size: 0.925rem;
-            font-weight: 400;
+        }
+
+        /* Toast notification */
+        .toast {
+            position: fixed;
+            bottom: 24px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: var(--bg-tertiary);
+            color: var(--text-primary);
+            padding: 12px 20px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+            opacity: 0;
+            transition: all 0.3s;
+            z-index: 1000;
+        }
+
+        .toast.show {
+            transform: translateX(-50%) translateY(0);
+            opacity: 1;
+        }
+
+        .toast button {
+            background: var(--accent);
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.85rem;
         }
 
         /* Input Form */
         .add-form {
-            background: #18181b;
+            background: var(--bg-secondary);
             border-radius: 16px;
             padding: 28px;
-            margin-bottom: 32px;
-            border: 1px solid #27272a;
+            margin-bottom: 24px;
+            border: 1px solid var(--border);
         }
 
         .form-row {
@@ -66,23 +163,28 @@
             min-width: 200px;
         }
 
+        .form-group.small {
+            flex: 0 0 180px;
+            min-width: 150px;
+        }
+
         .form-group label {
             display: block;
             margin-bottom: 8px;
             font-size: 0.8rem;
             font-weight: 500;
-            color: #a1a1aa;
+            color: var(--text-secondary);
             text-transform: uppercase;
             letter-spacing: 0.05em;
         }
 
-        .form-group input, .form-group textarea {
+        .form-group input, .form-group textarea, .form-group select {
             width: 100%;
-            padding: 14px 16px;
-            border: 1px solid #27272a;
+            padding: 12px 14px;
+            border: 1px solid var(--border);
             border-radius: 10px;
-            background: #09090b;
-            color: #fafafa;
+            background: var(--bg-input);
+            color: var(--text-primary);
             font-size: 0.95rem;
             font-family: inherit;
             transition: border-color 0.2s, box-shadow 0.2s;
@@ -93,27 +195,27 @@
             min-height: 60px;
         }
 
-        .form-group input:focus, .form-group textarea:focus {
+        .form-group input:focus, .form-group textarea:focus, .form-group select:focus {
             outline: none;
-            border-color: #a855f7;
+            border-color: var(--accent);
             box-shadow: 0 0 0 3px rgba(168, 85, 247, 0.15);
         }
 
         .form-group input::placeholder, .form-group textarea::placeholder {
-            color: #52525b;
+            color: var(--text-dimmed);
         }
 
         /* Slider Ratings */
         .rating-section {
             display: flex;
             gap: 32px;
-            margin-bottom: 24px;
+            margin-bottom: 20px;
             flex-wrap: wrap;
         }
 
         .rating-group {
             flex: 1;
-            min-width: 250px;
+            min-width: 220px;
         }
 
         .rating-group label {
@@ -121,12 +223,12 @@
             margin-bottom: 10px;
             font-size: 0.875rem;
             font-weight: 500;
-            color: #e4e4e7;
+            color: var(--text-primary);
         }
 
         .rating-group .hint {
             font-size: 0.75rem;
-            color: #52525b;
+            color: var(--text-dimmed);
             margin-top: 8px;
         }
 
@@ -140,7 +242,7 @@
             flex: 1;
             height: 6px;
             -webkit-appearance: none;
-            background: #27272a;
+            background: var(--bg-tertiary);
             border-radius: 100px;
             outline: none;
         }
@@ -150,24 +252,20 @@
             width: 20px;
             height: 20px;
             border-radius: 50%;
-            background: #a855f7;
+            background: var(--accent);
             cursor: pointer;
             box-shadow: 0 0 0 4px rgba(168, 85, 247, 0.2);
-            transition: box-shadow 0.2s;
-        }
-
-        .slider-container input[type="range"]::-webkit-slider-thumb:hover {
-            box-shadow: 0 0 0 6px rgba(168, 85, 247, 0.3);
         }
 
         .slider-value {
             font-size: 1.25rem;
             font-weight: 600;
-            color: #a855f7;
+            color: var(--accent);
             min-width: 32px;
             text-align: center;
         }
 
+        /* Buttons */
         .btn {
             padding: 12px 24px;
             border: none;
@@ -180,53 +278,150 @@
         }
 
         .btn-primary {
-            background: #a855f7;
+            background: var(--accent);
             color: #fff;
         }
 
         .btn-primary:hover {
-            background: #9333ea;
+            background: var(--accent-hover);
             transform: translateY(-1px);
             box-shadow: 0 8px 24px rgba(168, 85, 247, 0.3);
         }
 
-        .btn-danger {
-            background: transparent;
-            border: 1px solid #3f3f46;
-            color: #a1a1aa;
-            padding: 8px 14px;
+        .btn-secondary {
+            background: var(--bg-tertiary);
+            color: var(--text-primary);
+        }
+
+        .btn-secondary:hover {
+            background: var(--border-hover);
+        }
+
+        .btn-small {
+            padding: 6px 12px;
             font-size: 0.8rem;
         }
 
-        .btn-danger:hover {
-            background: #27272a;
-            color: #ef4444;
-            border-color: #ef4444;
+        .btn-icon {
+            width: 32px;
+            height: 32px;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+            background: transparent;
+            border: 1px solid var(--border);
+            color: var(--text-muted);
+            cursor: pointer;
+            transition: all 0.2s;
         }
 
-        /* Matrix Visualization */
-        .matrix-section {
-            margin-bottom: 32px;
+        .btn-icon:hover {
+            border-color: var(--border-hover);
+            color: var(--text-primary);
         }
 
-        .matrix-header {
+        .btn-icon.danger:hover {
+            border-color: var(--red);
+            color: var(--red);
+        }
+
+        .btn-icon.success:hover {
+            border-color: var(--green);
+            color: var(--green);
+        }
+
+        .form-actions {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        /* Toolbar */
+        .toolbar {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .search-box {
+            flex: 1;
+            min-width: 200px;
+            position: relative;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 10px 14px 10px 40px;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+            font-size: 0.9rem;
+            font-family: inherit;
+        }
+
+        .search-box input:focus {
+            outline: none;
+            border-color: var(--accent);
+        }
+
+        .search-box::before {
+            content: "🔍";
+            position: absolute;
+            left: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 0.9rem;
+        }
+
+        .filter-group {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+
+        .filter-group label {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        .filter-group select {
+            padding: 10px 14px;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+            font-size: 0.85rem;
+            font-family: inherit;
+            cursor: pointer;
+        }
+
+        /* View Toggle */
+        .view-section {
+            margin-bottom: 24px;
+        }
+
+        .section-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 20px;
+            margin-bottom: 16px;
         }
 
-        .matrix-header h2 {
+        .section-header h2 {
             font-size: 1.125rem;
             font-weight: 600;
-            color: #fafafa;
-            letter-spacing: -0.01em;
+            color: var(--text-primary);
         }
 
         .view-toggle {
             display: flex;
             gap: 4px;
-            background: #18181b;
+            background: var(--bg-secondary);
             padding: 4px;
             border-radius: 10px;
         }
@@ -235,7 +430,7 @@
             padding: 8px 16px;
             border: none;
             background: transparent;
-            color: #71717a;
+            color: var(--text-muted);
             border-radius: 8px;
             cursor: pointer;
             font-size: 0.8rem;
@@ -245,12 +440,54 @@
         }
 
         .view-toggle button.active {
-            background: #27272a;
-            color: #fafafa;
+            background: var(--bg-tertiary);
+            color: var(--text-primary);
         }
 
-        .view-toggle button:hover:not(.active) {
-            color: #a1a1aa;
+        /* Tabs */
+        .tabs {
+            display: flex;
+            gap: 4px;
+            background: var(--bg-secondary);
+            padding: 4px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+
+        .tabs button {
+            flex: 1;
+            padding: 10px 16px;
+            border: none;
+            background: transparent;
+            color: var(--text-muted);
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            font-weight: 500;
+            font-family: inherit;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .tabs button.active {
+            background: var(--bg-tertiary);
+            color: var(--text-primary);
+        }
+
+        .tabs .badge {
+            background: var(--accent);
+            color: white;
+            font-size: 0.7rem;
+            padding: 2px 6px;
+            border-radius: 10px;
+            font-weight: 600;
+        }
+
+        .tabs button.active .badge {
+            background: var(--accent);
         }
 
         /* Matrix Grid */
@@ -269,7 +506,7 @@
             justify-content: center;
             font-size: 0.7rem;
             font-weight: 600;
-            color: #52525b;
+            color: var(--text-dimmed);
             text-transform: uppercase;
             letter-spacing: 0.05em;
         }
@@ -280,52 +517,47 @@
         }
 
         .matrix-quadrant {
-            background: #18181b;
+            background: var(--bg-secondary);
             border-radius: 12px;
             padding: 14px;
-            border: 1px solid #27272a;
+            border: 1px solid var(--border);
             overflow-y: auto;
         }
 
         .matrix-quadrant h3 {
             font-size: 0.7rem;
             font-weight: 600;
-            color: #52525b;
+            color: var(--text-dimmed);
             margin-bottom: 12px;
             text-transform: uppercase;
             letter-spacing: 0.05em;
         }
 
         .quadrant-do-first {
-            border-color: rgba(34, 197, 94, 0.25);
-            background: linear-gradient(135deg, rgba(34, 197, 94, 0.08) 0%, #18181b 100%);
+            border-color: rgba(74, 222, 128, 0.25);
+            background: linear-gradient(135deg, rgba(74, 222, 128, 0.08) 0%, var(--bg-secondary) 100%);
         }
-
-        .quadrant-do-first h3 { color: #4ade80; }
+        .quadrant-do-first h3 { color: var(--green); }
 
         .quadrant-schedule {
             border-color: rgba(168, 85, 247, 0.25);
-            background: linear-gradient(135deg, rgba(168, 85, 247, 0.08) 0%, #18181b 100%);
+            background: linear-gradient(135deg, rgba(168, 85, 247, 0.08) 0%, var(--bg-secondary) 100%);
         }
-
-        .quadrant-schedule h3 { color: #c084fc; }
+        .quadrant-schedule h3 { color: var(--accent); }
 
         .quadrant-delegate {
-            border-color: rgba(251, 191, 36, 0.25);
-            background: linear-gradient(135deg, rgba(251, 191, 36, 0.08) 0%, #18181b 100%);
+            border-color: rgba(252, 211, 77, 0.25);
+            background: linear-gradient(135deg, rgba(252, 211, 77, 0.08) 0%, var(--bg-secondary) 100%);
         }
-
-        .quadrant-delegate h3 { color: #fcd34d; }
+        .quadrant-delegate h3 { color: var(--yellow); }
 
         .quadrant-reconsider {
-            border-color: #27272a;
-            background: #18181b;
+            border-color: var(--border);
         }
-
-        .quadrant-reconsider h3 { color: #52525b; }
+        .quadrant-reconsider h3 { color: var(--text-dimmed); }
 
         .matrix-item {
-            background: #09090b;
+            background: var(--bg-input);
             padding: 10px 12px;
             border-radius: 8px;
             margin-bottom: 8px;
@@ -337,11 +569,10 @@
         }
 
         .matrix-item:hover {
-            border-color: #3f3f46;
-            transform: translateX(2px);
+            border-color: var(--border-hover);
         }
 
-        /* Priority List */
+        /* Problem List */
         .problem-list {
             display: flex;
             flex-direction: column;
@@ -349,62 +580,113 @@
         }
 
         .problem-card {
-            background: #18181b;
+            background: var(--bg-secondary);
             border-radius: 12px;
-            padding: 20px;
-            border: 1px solid #27272a;
-            display: flex;
-            gap: 16px;
-            align-items: flex-start;
+            padding: 16px;
+            border: 1px solid var(--border);
             transition: all 0.2s;
         }
 
         .problem-card:hover {
-            border-color: #3f3f46;
-            transform: translateX(4px);
+            border-color: var(--border-hover);
+        }
+
+        .problem-card.completed {
+            opacity: 0.6;
+        }
+
+        .problem-card.completed .problem-title {
+            text-decoration: line-through;
+        }
+
+        .problem-card-header {
+            display: flex;
+            gap: 12px;
+            align-items: flex-start;
         }
 
         .priority-rank {
-            font-size: 1.25rem;
+            font-size: 1rem;
             font-weight: 700;
-            color: #71717a;
-            min-width: 44px;
-            height: 44px;
+            color: var(--text-muted);
+            min-width: 40px;
+            height: 40px;
             display: flex;
             align-items: center;
             justify-content: center;
-            background: #27272a;
+            background: var(--bg-tertiary);
             border-radius: 10px;
+            flex-shrink: 0;
         }
 
         .priority-rank.top-3 {
-            background: linear-gradient(135deg, #a855f7 0%, #6366f1 100%);
+            background: linear-gradient(135deg, var(--accent) 0%, #6366f1 100%);
             color: #fff;
         }
 
-        .problem-content {
+        .problem-main {
             flex: 1;
+            min-width: 0;
+        }
+
+        .problem-title-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 4px;
+            flex-wrap: wrap;
         }
 
         .problem-title {
             font-size: 1rem;
             font-weight: 600;
-            color: #fafafa;
-            margin-bottom: 4px;
-            letter-spacing: -0.01em;
+            color: var(--text-primary);
+        }
+
+        .category-badge {
+            font-size: 0.7rem;
+            padding: 3px 8px;
+            border-radius: 6px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .category-work { background: rgba(96, 165, 250, 0.2); color: var(--blue); }
+        .category-personal { background: rgba(168, 85, 247, 0.2); color: var(--accent); }
+        .category-health { background: rgba(74, 222, 128, 0.2); color: var(--green); }
+        .category-finance { background: rgba(252, 211, 77, 0.2); color: var(--yellow); }
+        .category-other { background: var(--bg-tertiary); color: var(--text-muted); }
+
+        .due-badge {
+            font-size: 0.7rem;
+            padding: 3px 8px;
+            border-radius: 6px;
+            font-weight: 500;
+            background: var(--bg-tertiary);
+            color: var(--text-muted);
+        }
+
+        .due-badge.overdue {
+            background: rgba(239, 68, 68, 0.2);
+            color: var(--red);
+        }
+
+        .due-badge.soon {
+            background: rgba(252, 211, 77, 0.2);
+            color: var(--yellow);
         }
 
         .problem-description {
             font-size: 0.875rem;
-            color: #71717a;
-            margin-bottom: 12px;
-            line-height: 1.5;
+            color: var(--text-muted);
+            margin-bottom: 8px;
         }
 
         .problem-meta {
             display: flex;
             gap: 16px;
             font-size: 0.8rem;
+            flex-wrap: wrap;
         }
 
         .meta-item {
@@ -413,89 +695,215 @@
             gap: 6px;
         }
 
-        .meta-label {
-            color: #52525b;
-        }
-
-        .meta-value {
-            color: #a1a1aa;
-            font-weight: 600;
-        }
-
-        .meta-value.impact {
-            color: #4ade80;
-        }
-
-        .meta-value.effort {
-            color: #fcd34d;
-        }
+        .meta-label { color: var(--text-dimmed); }
+        .meta-value { color: var(--text-secondary); font-weight: 600; }
+        .meta-value.impact { color: var(--green); }
+        .meta-value.effort { color: var(--yellow); }
 
         .problem-actions {
             display: flex;
-            flex-direction: column;
-            gap: 10px;
-            align-items: flex-end;
+            gap: 6px;
+            flex-shrink: 0;
         }
 
         .priority-score {
-            background: #27272a;
-            color: #a855f7;
-            padding: 8px 14px;
+            background: var(--bg-tertiary);
+            color: var(--accent);
+            padding: 8px 12px;
             border-radius: 8px;
             font-weight: 700;
-            font-size: 0.9rem;
-            text-align: center;
+            font-size: 0.85rem;
+        }
+
+        /* Notes Section */
+        .notes-section {
+            margin-top: 12px;
+            padding-top: 12px;
+            border-top: 1px solid var(--border);
+        }
+
+        .notes-toggle {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .notes-toggle:hover {
+            color: var(--text-primary);
+        }
+
+        .notes-content {
+            margin-top: 10px;
+            display: none;
+        }
+
+        .notes-content.show {
+            display: block;
+        }
+
+        .note-item {
+            background: var(--bg-input);
+            padding: 10px 12px;
+            border-radius: 8px;
+            margin-bottom: 8px;
+            font-size: 0.85rem;
+        }
+
+        .note-item .note-date {
+            font-size: 0.7rem;
+            color: var(--text-dimmed);
+            margin-bottom: 4px;
+        }
+
+        .add-note-form {
+            display: flex;
+            gap: 8px;
+            margin-top: 8px;
+        }
+
+        .add-note-form input {
+            flex: 1;
+            padding: 8px 12px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            background: var(--bg-input);
+            color: var(--text-primary);
+            font-size: 0.85rem;
+            font-family: inherit;
         }
 
         /* Empty State */
         .empty-state {
             text-align: center;
-            padding: 80px 20px;
-            color: #52525b;
+            padding: 60px 20px;
+            color: var(--text-dimmed);
         }
 
         .empty-state h3 {
             font-size: 1.1rem;
             font-weight: 600;
             margin-bottom: 8px;
-            color: #71717a;
+            color: var(--text-muted);
         }
 
-        .empty-state p {
-            font-size: 0.9rem;
+        /* Modal */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.2s;
+        }
+
+        .modal-overlay.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal {
+            background: var(--bg-secondary);
+            border-radius: 16px;
+            padding: 28px;
+            width: 90%;
+            max-width: 500px;
+            max-height: 90vh;
+            overflow-y: auto;
+            border: 1px solid var(--border);
+        }
+
+        .modal h2 {
+            margin-bottom: 20px;
+            font-size: 1.25rem;
+        }
+
+        .modal-actions {
+            display: flex;
+            gap: 12px;
+            margin-top: 20px;
+            justify-content: flex-end;
+        }
+
+        /* Data actions */
+        .data-actions {
+            display: flex;
+            gap: 8px;
         }
 
         /* Responsive */
-        @media (max-width: 600px) {
-            .rating-section {
+        @media (max-width: 768px) {
+            .toolbar {
                 flex-direction: column;
+                align-items: stretch;
+            }
+
+            .filter-group {
+                justify-content: space-between;
             }
 
             .matrix-grid {
                 height: 500px;
             }
 
-            .problem-card {
-                flex-direction: column;
+            .problem-card-header {
+                flex-wrap: wrap;
             }
 
-            .priority-rank {
-                align-self: flex-start;
+            .problem-actions {
+                width: 100%;
+                justify-content: flex-end;
+                margin-top: 12px;
             }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>Problem Prioritizer</h1>
+        <!-- Header -->
+        <div class="header">
+            <h1>Problem Prioritizer</h1>
+            <div class="header-actions">
+                <button class="icon-btn" id="themeToggle" title="Toggle theme">🌙</button>
+                <button class="icon-btn" id="exportBtn" title="Export data">📤</button>
+                <button class="icon-btn" id="importBtn" title="Import data">📥</button>
+            </div>
+        </div>
         <p class="subtitle">Add your problems, rate their impact and effort, and see what to tackle first.</p>
 
-        <!-- Add Problem Form -->
+        <!-- Hidden file input for import -->
+        <input type="file" id="importFile" accept=".json" style="display: none;">
+
+        <!-- Add/Edit Problem Form -->
         <div class="add-form">
             <div class="form-row">
                 <div class="form-group" style="flex: 2;">
                     <label for="problemTitle">What's the problem?</label>
                     <input type="text" id="problemTitle" placeholder="e.g., Fix login bug, Learn new framework...">
+                </div>
+                <div class="form-group small">
+                    <label for="problemCategory">Category</label>
+                    <select id="problemCategory">
+                        <option value="">None</option>
+                        <option value="work">Work</option>
+                        <option value="personal">Personal</option>
+                        <option value="health">Health</option>
+                        <option value="finance">Finance</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+                <div class="form-group small">
+                    <label for="problemDueDate">Due Date</label>
+                    <input type="date" id="problemDueDate">
                 </div>
             </div>
             <div class="form-row">
@@ -522,16 +930,54 @@
                     <p class="hint">1 = Easy, 10 = Massive undertaking</p>
                 </div>
             </div>
-            <button class="btn btn-primary" id="addProblem">Add Problem</button>
+            <div class="form-actions">
+                <button class="btn btn-primary" id="addProblem">Add Problem</button>
+                <button class="btn btn-secondary" id="cancelEdit" style="display: none;">Cancel</button>
+            </div>
         </div>
 
-        <!-- View Toggle and Matrix/List -->
-        <div class="matrix-section">
-            <div class="matrix-header">
+        <!-- Tabs -->
+        <div class="tabs">
+            <button class="active" data-tab="active">Active <span class="badge" id="activeCount">0</span></button>
+            <button data-tab="completed">Completed <span class="badge" id="completedCount">0</span></button>
+            <button data-tab="archived">Archived <span class="badge" id="archivedCount">0</span></button>
+        </div>
+
+        <!-- Toolbar -->
+        <div class="toolbar">
+            <div class="search-box">
+                <input type="text" id="searchInput" placeholder="Search problems...">
+            </div>
+            <div class="filter-group">
+                <label>Category:</label>
+                <select id="filterCategory">
+                    <option value="">All</option>
+                    <option value="work">Work</option>
+                    <option value="personal">Personal</option>
+                    <option value="health">Health</option>
+                    <option value="finance">Finance</option>
+                    <option value="other">Other</option>
+                </select>
+            </div>
+            <div class="filter-group">
+                <label>Sort:</label>
+                <select id="sortBy">
+                    <option value="priority">Priority</option>
+                    <option value="impact">Impact</option>
+                    <option value="effort">Effort</option>
+                    <option value="dueDate">Due Date</option>
+                    <option value="created">Date Added</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- View Section -->
+        <div class="view-section">
+            <div class="section-header">
                 <h2>Your Problems</h2>
                 <div class="view-toggle">
                     <button id="viewMatrix" class="active">Matrix</button>
-                    <button id="viewList">Priority List</button>
+                    <button id="viewList">List</button>
                 </div>
             </div>
 
@@ -567,37 +1013,133 @@
         </div>
     </div>
 
+    <!-- Toast -->
+    <div class="toast" id="toast">
+        <span id="toastMessage"></span>
+        <button id="undoBtn">Undo</button>
+    </div>
+
+    <!-- Edit Modal -->
+    <div class="modal-overlay" id="editModal">
+        <div class="modal">
+            <h2>Edit Problem</h2>
+            <div class="form-group">
+                <label>Title</label>
+                <input type="text" id="editTitle">
+            </div>
+            <div class="form-row" style="margin-top: 16px;">
+                <div class="form-group small">
+                    <label>Category</label>
+                    <select id="editCategory">
+                        <option value="">None</option>
+                        <option value="work">Work</option>
+                        <option value="personal">Personal</option>
+                        <option value="health">Health</option>
+                        <option value="finance">Finance</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+                <div class="form-group small">
+                    <label>Due Date</label>
+                    <input type="date" id="editDueDate">
+                </div>
+            </div>
+            <div class="form-group" style="margin-top: 16px;">
+                <label>Description</label>
+                <textarea id="editDescription"></textarea>
+            </div>
+            <div class="rating-section" style="margin-top: 16px;">
+                <div class="rating-group">
+                    <label>Impact</label>
+                    <div class="slider-container">
+                        <input type="range" id="editImpact" min="1" max="10" value="5">
+                        <span class="slider-value" id="editImpactValue">5</span>
+                    </div>
+                </div>
+                <div class="rating-group">
+                    <label>Effort</label>
+                    <div class="slider-container">
+                        <input type="range" id="editEffort" min="1" max="10" value="5">
+                        <span class="slider-value" id="editEffortValue">5</span>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-actions">
+                <button class="btn btn-secondary" id="closeModal">Cancel</button>
+                <button class="btn btn-primary" id="saveEdit">Save Changes</button>
+            </div>
+        </div>
+    </div>
+
     <script>
         // State
         let problems = JSON.parse(localStorage.getItem('problems')) || [];
         let currentView = 'matrix';
+        let currentTab = 'active';
+        let editingId = null;
+        let lastDeleted = null;
+        let toastTimeout = null;
 
         // DOM Elements
         const titleInput = document.getElementById('problemTitle');
         const descInput = document.getElementById('problemDescription');
+        const categoryInput = document.getElementById('problemCategory');
+        const dueDateInput = document.getElementById('problemDueDate');
         const impactSlider = document.getElementById('impactSlider');
         const effortSlider = document.getElementById('effortSlider');
         const impactValue = document.getElementById('impactValue');
         const effortValue = document.getElementById('effortValue');
         const addBtn = document.getElementById('addProblem');
+        const cancelBtn = document.getElementById('cancelEdit');
         const matrixView = document.getElementById('matrixView');
         const listView = document.getElementById('listView');
         const emptyState = document.getElementById('emptyState');
-        const viewMatrixBtn = document.getElementById('viewMatrix');
-        const viewListBtn = document.getElementById('viewList');
+        const searchInput = document.getElementById('searchInput');
+        const filterCategory = document.getElementById('filterCategory');
+        const sortBy = document.getElementById('sortBy');
+        const toast = document.getElementById('toast');
+        const toastMessage = document.getElementById('toastMessage');
+        const undoBtn = document.getElementById('undoBtn');
+        const themeToggle = document.getElementById('themeToggle');
+        const exportBtn = document.getElementById('exportBtn');
+        const importBtn = document.getElementById('importBtn');
+        const importFile = document.getElementById('importFile');
 
-        // Update slider display
-        impactSlider.addEventListener('input', () => {
-            impactValue.textContent = impactSlider.value;
+        // Edit modal elements
+        const editModal = document.getElementById('editModal');
+        const editTitle = document.getElementById('editTitle');
+        const editCategory = document.getElementById('editCategory');
+        const editDueDate = document.getElementById('editDueDate');
+        const editDescription = document.getElementById('editDescription');
+        const editImpact = document.getElementById('editImpact');
+        const editEffort = document.getElementById('editEffort');
+        const editImpactValue = document.getElementById('editImpactValue');
+        const editEffortValue = document.getElementById('editEffortValue');
+        const closeModal = document.getElementById('closeModal');
+        const saveEdit = document.getElementById('saveEdit');
+
+        // Initialize theme
+        if (localStorage.getItem('theme') === 'light') {
+            document.body.classList.add('light-mode');
+            themeToggle.textContent = '☀️';
+        }
+
+        // Theme toggle
+        themeToggle.addEventListener('click', () => {
+            document.body.classList.toggle('light-mode');
+            const isLight = document.body.classList.contains('light-mode');
+            themeToggle.textContent = isLight ? '☀️' : '🌙';
+            localStorage.setItem('theme', isLight ? 'light' : 'dark');
         });
 
-        effortSlider.addEventListener('input', () => {
-            effortValue.textContent = effortSlider.value;
-        });
+        // Slider updates
+        impactSlider.addEventListener('input', () => impactValue.textContent = impactSlider.value);
+        effortSlider.addEventListener('input', () => effortValue.textContent = effortSlider.value);
+        editImpact.addEventListener('input', () => editImpactValue.textContent = editImpact.value);
+        editEffort.addEventListener('input', () => editEffortValue.textContent = editEffort.value);
 
-        // Calculate priority score (higher is better)
+        // Calculate priority score
         function calculatePriority(impact, effort) {
-            // Impact weighted more, effort reduces priority
             return ((impact * 2) / effort).toFixed(2);
         }
 
@@ -614,6 +1156,30 @@
             localStorage.setItem('problems', JSON.stringify(problems));
         }
 
+        // Show toast
+        function showToast(message, showUndo = true) {
+            toastMessage.textContent = message;
+            undoBtn.style.display = showUndo ? 'block' : 'none';
+            toast.classList.add('show');
+            clearTimeout(toastTimeout);
+            toastTimeout = setTimeout(() => {
+                toast.classList.remove('show');
+                if (!showUndo) lastDeleted = null;
+            }, 5000);
+        }
+
+        // Undo delete
+        undoBtn.addEventListener('click', () => {
+            if (lastDeleted) {
+                problems.push(lastDeleted);
+                lastDeleted = null;
+                saveProblems();
+                render();
+                toast.classList.remove('show');
+                showToast('Problem restored!', false);
+            }
+        });
+
         // Add problem
         function addProblem() {
             const title = titleInput.value.trim();
@@ -626,19 +1192,29 @@
                 id: Date.now(),
                 title,
                 description: descInput.value.trim(),
+                category: categoryInput.value,
+                dueDate: dueDateInput.value,
                 impact: parseInt(impactSlider.value),
                 effort: parseInt(effortSlider.value),
                 priority: calculatePriority(impactSlider.value, effortSlider.value),
+                status: 'active',
+                notes: [],
                 createdAt: new Date().toISOString()
             };
 
             problems.push(problem);
             saveProblems();
             render();
+            resetForm();
+            showToast('Problem added!', false);
+        }
 
-            // Reset form
+        // Reset form
+        function resetForm() {
             titleInput.value = '';
             descInput.value = '';
+            categoryInput.value = '';
+            dueDateInput.value = '';
             impactSlider.value = 5;
             effortSlider.value = 5;
             impactValue.textContent = '5';
@@ -648,9 +1224,201 @@
 
         // Delete problem
         function deleteProblem(id) {
+            const problem = problems.find(p => p.id === id);
+            lastDeleted = problem;
             problems = problems.filter(p => p.id !== id);
             saveProblems();
             render();
+            showToast('Problem deleted', true);
+        }
+
+        // Complete problem
+        function completeProblem(id) {
+            const problem = problems.find(p => p.id === id);
+            if (problem) {
+                problem.status = 'completed';
+                problem.completedAt = new Date().toISOString();
+                saveProblems();
+                render();
+                showToast('Problem completed!', false);
+            }
+        }
+
+        // Reactivate problem
+        function reactivateProblem(id) {
+            const problem = problems.find(p => p.id === id);
+            if (problem) {
+                problem.status = 'active';
+                delete problem.completedAt;
+                saveProblems();
+                render();
+            }
+        }
+
+        // Archive problem
+        function archiveProblem(id) {
+            const problem = problems.find(p => p.id === id);
+            if (problem) {
+                problem.status = 'archived';
+                saveProblems();
+                render();
+                showToast('Problem archived', false);
+            }
+        }
+
+        // Open edit modal
+        function openEditModal(id) {
+            const problem = problems.find(p => p.id === id);
+            if (!problem) return;
+
+            editingId = id;
+            editTitle.value = problem.title;
+            editCategory.value = problem.category || '';
+            editDueDate.value = problem.dueDate || '';
+            editDescription.value = problem.description || '';
+            editImpact.value = problem.impact;
+            editEffort.value = problem.effort;
+            editImpactValue.textContent = problem.impact;
+            editEffortValue.textContent = problem.effort;
+            editModal.classList.add('show');
+        }
+
+        // Close edit modal
+        closeModal.addEventListener('click', () => {
+            editModal.classList.remove('show');
+            editingId = null;
+        });
+
+        // Save edit
+        saveEdit.addEventListener('click', () => {
+            if (!editingId) return;
+            const problem = problems.find(p => p.id === editingId);
+            if (problem) {
+                problem.title = editTitle.value.trim();
+                problem.category = editCategory.value;
+                problem.dueDate = editDueDate.value;
+                problem.description = editDescription.value.trim();
+                problem.impact = parseInt(editImpact.value);
+                problem.effort = parseInt(editEffort.value);
+                problem.priority = calculatePriority(problem.impact, problem.effort);
+                saveProblems();
+                render();
+                showToast('Changes saved!', false);
+            }
+            editModal.classList.remove('show');
+            editingId = null;
+        });
+
+        // Add note to problem
+        function addNote(id, noteText) {
+            const problem = problems.find(p => p.id === id);
+            if (problem && noteText.trim()) {
+                problem.notes = problem.notes || [];
+                problem.notes.push({
+                    text: noteText.trim(),
+                    date: new Date().toISOString()
+                });
+                saveProblems();
+                render();
+            }
+        }
+
+        // Export data
+        exportBtn.addEventListener('click', () => {
+            const data = JSON.stringify(problems, null, 2);
+            const blob = new Blob([data], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'problems-backup.json';
+            a.click();
+            URL.revokeObjectURL(url);
+            showToast('Data exported!', false);
+        });
+
+        // Import data
+        importBtn.addEventListener('click', () => importFile.click());
+        importFile.addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                try {
+                    const imported = JSON.parse(e.target.result);
+                    if (Array.isArray(imported)) {
+                        problems = imported;
+                        saveProblems();
+                        render();
+                        showToast(`Imported ${imported.length} problems!`, false);
+                    }
+                } catch (err) {
+                    showToast('Invalid file format', false);
+                }
+            };
+            reader.readAsText(file);
+            importFile.value = '';
+        });
+
+        // Get filtered and sorted problems
+        function getFilteredProblems() {
+            let filtered = problems.filter(p => p.status === currentTab);
+
+            // Search filter
+            const search = searchInput.value.toLowerCase();
+            if (search) {
+                filtered = filtered.filter(p =>
+                    p.title.toLowerCase().includes(search) ||
+                    (p.description && p.description.toLowerCase().includes(search))
+                );
+            }
+
+            // Category filter
+            const category = filterCategory.value;
+            if (category) {
+                filtered = filtered.filter(p => p.category === category);
+            }
+
+            // Sort
+            const sort = sortBy.value;
+            filtered.sort((a, b) => {
+                switch (sort) {
+                    case 'priority': return b.priority - a.priority;
+                    case 'impact': return b.impact - a.impact;
+                    case 'effort': return a.effort - b.effort;
+                    case 'dueDate':
+                        if (!a.dueDate) return 1;
+                        if (!b.dueDate) return -1;
+                        return new Date(a.dueDate) - new Date(b.dueDate);
+                    case 'created': return new Date(b.createdAt) - new Date(a.createdAt);
+                    default: return 0;
+                }
+            });
+
+            return filtered;
+        }
+
+        // Format date
+        function formatDate(dateStr) {
+            if (!dateStr) return '';
+            const date = new Date(dateStr);
+            const today = new Date();
+            today.setHours(0, 0, 0, 0);
+            const tomorrow = new Date(today);
+            tomorrow.setDate(tomorrow.getDate() + 1);
+            const nextWeek = new Date(today);
+            nextWeek.setDate(nextWeek.getDate() + 7);
+
+            if (date < today) return { text: 'Overdue', class: 'overdue' };
+            if (date < tomorrow) return { text: 'Today', class: 'soon' };
+            if (date < nextWeek) return { text: `${Math.ceil((date - today) / 86400000)} days`, class: 'soon' };
+            return { text: date.toLocaleDateString(), class: '' };
+        }
+
+        // Escape HTML
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
         }
 
         // Render matrix view
@@ -662,23 +1430,19 @@
                 'reconsider': document.getElementById('quadrant-reconsider')
             };
 
-            // Clear quadrants (keep headers)
             Object.values(quadrants).forEach(q => {
                 const header = q.querySelector('h3');
                 q.innerHTML = '';
                 q.appendChild(header);
             });
 
-            problems.forEach(problem => {
+            const filtered = getFilteredProblems();
+            filtered.forEach(problem => {
                 const quadrant = getQuadrant(problem.impact, problem.effort);
                 const item = document.createElement('div');
                 item.className = 'matrix-item';
                 item.textContent = problem.title;
-                item.onclick = () => {
-                    if (confirm(`Delete "${problem.title}"?`)) {
-                        deleteProblem(problem.id);
-                    }
-                };
+                item.onclick = () => openEditModal(problem.id);
                 quadrants[quadrant].appendChild(item);
             });
         }
@@ -686,79 +1450,162 @@
         // Render list view
         function renderList() {
             listView.innerHTML = '';
+            const filtered = getFilteredProblems();
 
-            // Sort by priority (highest first)
-            const sorted = [...problems].sort((a, b) => b.priority - a.priority);
-
-            sorted.forEach((problem, index) => {
+            filtered.forEach((problem, index) => {
+                const dueInfo = formatDate(problem.dueDate);
                 const card = document.createElement('div');
-                card.className = 'problem-card';
+                card.className = `problem-card ${problem.status === 'completed' ? 'completed' : ''}`;
+
+                let actionsHtml = '';
+                if (problem.status === 'active') {
+                    actionsHtml = `
+                        <button class="btn-icon success" onclick="completeProblem(${problem.id})" title="Complete">✓</button>
+                        <button class="btn-icon" onclick="openEditModal(${problem.id})" title="Edit">✎</button>
+                        <button class="btn-icon danger" onclick="deleteProblem(${problem.id})" title="Delete">×</button>
+                    `;
+                } else if (problem.status === 'completed') {
+                    actionsHtml = `
+                        <button class="btn-icon" onclick="reactivateProblem(${problem.id})" title="Reactivate">↩</button>
+                        <button class="btn-icon" onclick="archiveProblem(${problem.id})" title="Archive">📁</button>
+                        <button class="btn-icon danger" onclick="deleteProblem(${problem.id})" title="Delete">×</button>
+                    `;
+                } else {
+                    actionsHtml = `
+                        <button class="btn-icon" onclick="reactivateProblem(${problem.id})" title="Restore">↩</button>
+                        <button class="btn-icon danger" onclick="deleteProblem(${problem.id})" title="Delete">×</button>
+                    `;
+                }
+
+                const notesHtml = problem.notes && problem.notes.length > 0
+                    ? problem.notes.map(n => `
+                        <div class="note-item">
+                            <div class="note-date">${new Date(n.date).toLocaleDateString()}</div>
+                            ${escapeHtml(n.text)}
+                        </div>
+                    `).join('')
+                    : '<p style="color: var(--text-dimmed); font-size: 0.85rem;">No notes yet</p>';
+
                 card.innerHTML = `
-                    <div class="priority-rank ${index < 3 ? 'top-3' : ''}">#${index + 1}</div>
-                    <div class="problem-content">
-                        <div class="problem-title">${escapeHtml(problem.title)}</div>
-                        ${problem.description ? `<div class="problem-description">${escapeHtml(problem.description)}</div>` : ''}
-                        <div class="problem-meta">
-                            <div class="meta-item">
-                                <span class="meta-label">Impact:</span>
-                                <span class="meta-value impact">${problem.impact}/10</span>
+                    <div class="problem-card-header">
+                        <div class="priority-rank ${index < 3 && problem.status === 'active' ? 'top-3' : ''}">${problem.status === 'active' ? '#' + (index + 1) : '—'}</div>
+                        <div class="problem-main">
+                            <div class="problem-title-row">
+                                <span class="problem-title">${escapeHtml(problem.title)}</span>
+                                ${problem.category ? `<span class="category-badge category-${problem.category}">${problem.category}</span>` : ''}
+                                ${dueInfo.text ? `<span class="due-badge ${dueInfo.class}">${dueInfo.text}</span>` : ''}
                             </div>
-                            <div class="meta-item">
-                                <span class="meta-label">Effort:</span>
-                                <span class="meta-value effort">${problem.effort}/10</span>
+                            ${problem.description ? `<div class="problem-description">${escapeHtml(problem.description)}</div>` : ''}
+                            <div class="problem-meta">
+                                <div class="meta-item">
+                                    <span class="meta-label">Impact:</span>
+                                    <span class="meta-value impact">${problem.impact}/10</span>
+                                </div>
+                                <div class="meta-item">
+                                    <span class="meta-label">Effort:</span>
+                                    <span class="meta-value effort">${problem.effort}/10</span>
+                                </div>
+                                <div class="meta-item">
+                                    <span class="priority-score">${problem.priority}</span>
+                                </div>
                             </div>
                         </div>
+                        <div class="problem-actions">
+                            ${actionsHtml}
+                        </div>
                     </div>
-                    <div class="problem-actions">
-                        <div class="priority-score">${problem.priority}</div>
-                        <button class="btn btn-danger" onclick="deleteProblem(${problem.id})">Delete</button>
+                    <div class="notes-section">
+                        <div class="notes-toggle" onclick="this.nextElementSibling.classList.toggle('show')">
+                            📝 Notes (${problem.notes ? problem.notes.length : 0}) ▾
+                        </div>
+                        <div class="notes-content">
+                            ${notesHtml}
+                            <div class="add-note-form">
+                                <input type="text" placeholder="Add a note..." id="note-input-${problem.id}">
+                                <button class="btn btn-small btn-secondary" onclick="addNote(${problem.id}, document.getElementById('note-input-${problem.id}').value); document.getElementById('note-input-${problem.id}').value = '';">Add</button>
+                            </div>
+                        </div>
                     </div>
                 `;
                 listView.appendChild(card);
             });
         }
 
-        // Escape HTML
-        function escapeHtml(text) {
-            const div = document.createElement('div');
-            div.textContent = text;
-            return div.innerHTML;
+        // Update tab counts
+        function updateCounts() {
+            document.getElementById('activeCount').textContent = problems.filter(p => p.status === 'active').length;
+            document.getElementById('completedCount').textContent = problems.filter(p => p.status === 'completed').length;
+            document.getElementById('archivedCount').textContent = problems.filter(p => p.status === 'archived').length;
         }
 
         // Main render
         function render() {
-            const hasProblems = problems.length > 0;
+            const filtered = getFilteredProblems();
+            const hasProblems = filtered.length > 0;
 
             emptyState.style.display = hasProblems ? 'none' : 'block';
-            matrixView.style.display = hasProblems && currentView === 'matrix' ? 'grid' : 'none';
-            listView.style.display = hasProblems && currentView === 'list' ? 'flex' : 'none';
+            matrixView.style.display = hasProblems && currentView === 'matrix' && currentTab === 'active' ? 'grid' : 'none';
+            listView.style.display = hasProblems && (currentView === 'list' || currentTab !== 'active') ? 'flex' : 'none';
 
             if (hasProblems) {
                 renderMatrix();
                 renderList();
             }
+
+            updateCounts();
         }
 
         // View toggle
-        viewMatrixBtn.addEventListener('click', () => {
+        document.getElementById('viewMatrix').addEventListener('click', function() {
             currentView = 'matrix';
-            viewMatrixBtn.classList.add('active');
-            viewListBtn.classList.remove('active');
+            this.classList.add('active');
+            document.getElementById('viewList').classList.remove('active');
             render();
         });
 
-        viewListBtn.addEventListener('click', () => {
+        document.getElementById('viewList').addEventListener('click', function() {
             currentView = 'list';
-            viewListBtn.classList.add('active');
-            viewMatrixBtn.classList.remove('active');
+            this.classList.add('active');
+            document.getElementById('viewMatrix').classList.remove('active');
             render();
         });
+
+        // Tab switching
+        document.querySelectorAll('.tabs button').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.tabs button').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                currentTab = this.dataset.tab;
+                render();
+            });
+        });
+
+        // Search and filter listeners
+        searchInput.addEventListener('input', render);
+        filterCategory.addEventListener('change', render);
+        sortBy.addEventListener('change', render);
 
         // Event listeners
         addBtn.addEventListener('click', addProblem);
         titleInput.addEventListener('keypress', (e) => {
             if (e.key === 'Enter') addProblem();
         });
+
+        // Close modal on overlay click
+        editModal.addEventListener('click', (e) => {
+            if (e.target === editModal) {
+                editModal.classList.remove('show');
+                editingId = null;
+            }
+        });
+
+        // Migrate old data
+        problems = problems.map(p => ({
+            ...p,
+            status: p.status || 'active',
+            notes: p.notes || []
+        }));
+        saveProblems();
 
         // Initial render
         render();
