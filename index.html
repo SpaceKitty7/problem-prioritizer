@@ -8,89 +8,349 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
+        /* Default: Clean grayscale - no color, just contrast */
         :root {
-            --bg-primary: #0a0a0b;
-            --bg-secondary: #18181b;
-            --bg-tertiary: #27272a;
-            --bg-input: #09090b;
+            --bg-primary: #0a0a0a;
+            --bg-secondary: #171717;
+            --bg-tertiary: #262626;
+            --bg-input: #0a0a0a;
             --text-primary: #fafafa;
-            --text-secondary: #a1a1aa;
-            --text-muted: #71717a;
-            --text-dimmed: #52525b;
-            --border: #27272a;
-            --border-hover: #3f3f46;
-            --accent: #a855f7;
-            --accent-hover: #9333ea;
-            --green: #4ade80;
-            --yellow: #fcd34d;
-            --red: #ef4444;
-            --blue: #60a5fa;
+            --text-secondary: #a3a3a3;
+            --text-muted: #737373;
+            --text-dimmed: #525252;
+            --border: #262626;
+            --border-hover: #404040;
+            --accent: #737373;
+            --accent-hover: #525252;
+            --green: #a3a3a3;
+            --yellow: #a3a3a3;
+            --red: #a3a3a3;
+            --blue: #a3a3a3;
         }
 
         .light-mode {
             --bg-primary: #ffffff;
-            --bg-secondary: #f4f4f5;
-            --bg-tertiary: #e4e4e7;
+            --bg-secondary: #f5f5f5;
+            --bg-tertiary: #e5e5e5;
             --bg-input: #ffffff;
-            --text-primary: #18181b;
-            --text-secondary: #52525b;
-            --text-muted: #71717a;
-            --text-dimmed: #a1a1aa;
-            --border: #e4e4e7;
-            --border-hover: #d4d4d8;
+            --text-primary: #171717;
+            --text-secondary: #525252;
+            --text-muted: #737373;
+            --text-dimmed: #a3a3a3;
+            --border: #e5e5e5;
+            --border-hover: #d4d4d4;
+            --accent: #525252;
+            --accent-hover: #404040;
         }
 
-        /* NFL Team Themes */
-        .theme-cardinals { --accent: #97233F; --accent-hover: #7a1c33; --green: #FFB612; }
-        .theme-falcons { --accent: #A71930; --accent-hover: #8a1528; --green: #A5ACAF; }
-        .theme-ravens { --accent: #241773; --accent-hover: #1a1156; --green: #9E7C0C; }
-        .theme-bills { --accent: #00338D; --accent-hover: #002a73; --green: #C60C30; }
-        .theme-panthers { --accent: #0085CA; --accent-hover: #006da6; --green: #BFC0BF; }
-        .theme-bears { --accent: #0B162A; --accent-hover: #1a2d4a; --green: #C83803; }
-        .theme-bengals { --accent: #FB4F14; --accent-hover: #d94310; --green: #000000; }
-        .theme-browns { --accent: #311D00; --accent-hover: #4a2c00; --green: #FF3C00; }
-        .theme-cowboys { --accent: #003594; --accent-hover: #002a73; --green: #869397; }
-        .theme-broncos { --accent: #FB4F14; --accent-hover: #d94310; --green: #002244; }
-        .theme-lions { --accent: #0076B6; --accent-hover: #005a8c; --green: #B0B7BC; }
-        .theme-packers { --accent: #203731; --accent-hover: #2d4a42; --green: #FFB612; }
-        .theme-texans { --accent: #03202F; --accent-hover: #0a3a52; --green: #A71930; }
-        .theme-colts { --accent: #002C5F; --accent-hover: #003d82; --green: #A2AAAD; }
-        .theme-jaguars { --accent: #006778; --accent-hover: #008599; --green: #9F792C; }
-        .theme-chiefs { --accent: #E31837; --accent-hover: #c4142f; --green: #FFB81C; }
-        .theme-raiders { --accent: #000000; --accent-hover: #1a1a1a; --green: #A5ACAF; }
-        .theme-chargers { --accent: #0080C6; --accent-hover: #006ba6; --green: #FFC20E; }
-        .theme-rams { --accent: #003594; --accent-hover: #002a73; --green: #FFA300; }
-        .theme-dolphins { --accent: #008E97; --accent-hover: #00757d; --green: #FC4C02; }
-        .theme-vikings { --accent: #4F2683; --accent-hover: #3d1d66; --green: #FFC62F; }
-        .theme-patriots { --accent: #002244; --accent-hover: #003366; --green: #C60C30; }
-        .theme-saints { --accent: #101820; --accent-hover: #1a2630; --green: #D3BC8D; }
-        .theme-giants { --accent: #0B2265; --accent-hover: #0f2d82; --green: #A71930; }
-        .theme-jets { --accent: #125740; --accent-hover: #1a7357; --green: #000000; }
-        .theme-eagles { --accent: #004C54; --accent-hover: #006670; --green: #A5ACAF; }
-        .theme-steelers { --accent: #FFB612; --accent-hover: #e6a410; --green: #101820; --text-primary: #101820; --bg-primary: #FFB612; --bg-secondary: #e6a410; --bg-tertiary: #cca00e; --border: #cca00e; }
-        .theme-49ers { --accent: #AA0000; --accent-hover: #8a0000; --green: #B3995D; }
-        .theme-seahawks { --accent: #002244; --accent-hover: #003366; --green: #69BE28; }
-        .theme-buccaneers { --accent: #D50A0A; --accent-hover: #b30808; --green: #B1BABF; }
-        .theme-titans { --accent: #0C2340; --accent-hover: #132f52; --green: #4B92DB; }
-        .theme-commanders { --accent: #5A1414; --accent-hover: #731a1a; --green: #FFB612; }
+        /* ========== NFL TEAM THEMES - BOLD & UNMISTAKABLE ========== */
 
-        /* Special Theme: Brady Blue */
+        /* Arizona Cardinals - Cardinal Red & White */
+        .theme-cardinals {
+            --bg-primary: #1a0a10; --bg-secondary: #97233F; --bg-tertiary: #b02a4a;
+            --bg-input: #2a0f18; --text-primary: #ffffff; --text-secondary: #ffcccc;
+            --text-muted: #ff9999; --text-dimmed: #cc6666; --border: #b02a4a;
+            --border-hover: #d4305a; --accent: #ffffff; --accent-hover: #ffcccc;
+            --green: #FFB612; --yellow: #FFB612; --red: #ffffff;
+        }
+
+        /* Atlanta Falcons - Red & Black */
+        .theme-falcons {
+            --bg-primary: #0a0a0a; --bg-secondary: #A71930; --bg-tertiary: #c41e3a;
+            --bg-input: #1a0a0a; --text-primary: #ffffff; --text-secondary: #ffcccc;
+            --text-muted: #ff9999; --text-dimmed: #cc6666; --border: #A71930;
+            --border-hover: #c41e3a; --accent: #A5ACAF; --accent-hover: #bfc5c8;
+            --green: #A5ACAF; --yellow: #A5ACAF; --red: #ffffff;
+        }
+
+        /* Baltimore Ravens - Purple & Gold */
+        .theme-ravens {
+            --bg-primary: #0f0a1a; --bg-secondary: #241773; --bg-tertiary: #2d1c8c;
+            --bg-input: #1a0f2a; --text-primary: #ffffff; --text-secondary: #d4b8ff;
+            --text-muted: #b38aff; --text-dimmed: #8855cc; --border: #9E7C0C;
+            --border-hover: #b8910e; --accent: #9E7C0C; --accent-hover: #b8910e;
+            --green: #9E7C0C; --yellow: #9E7C0C; --red: #241773;
+        }
+
+        /* Buffalo Bills - Royal Blue & Red */
+        .theme-bills {
+            --bg-primary: #001428; --bg-secondary: #00338D; --bg-tertiary: #0044b8;
+            --bg-input: #001a33; --text-primary: #ffffff; --text-secondary: #99c2ff;
+            --text-muted: #6699ff; --text-dimmed: #3366cc; --border: #C60C30;
+            --border-hover: #e00f38; --accent: #C60C30; --accent-hover: #e00f38;
+            --green: #C60C30; --yellow: #C60C30; --red: #C60C30;
+        }
+
+        /* Carolina Panthers - Panther Blue & Black */
+        .theme-panthers {
+            --bg-primary: #0a0a0a; --bg-secondary: #0085CA; --bg-tertiary: #009ee0;
+            --bg-input: #0a1520; --text-primary: #ffffff; --text-secondary: #99d6ff;
+            --text-muted: #66c2ff; --text-dimmed: #339999; --border: #0085CA;
+            --border-hover: #009ee0; --accent: #BFC0BF; --accent-hover: #d4d4d4;
+            --green: #BFC0BF; --yellow: #BFC0BF; --red: #0085CA;
+        }
+
+        /* Chicago Bears - Navy & Orange */
+        .theme-bears {
+            --bg-primary: #0B162A; --bg-secondary: #162d4a; --bg-tertiary: #1e3a5f;
+            --bg-input: #0a1020; --text-primary: #ffffff; --text-secondary: #ffcc99;
+            --text-muted: #ff9966; --text-dimmed: #cc6633; --border: #C83803;
+            --border-hover: #e04004; --accent: #C83803; --accent-hover: #e04004;
+            --green: #C83803; --yellow: #C83803; --red: #C83803;
+        }
+
+        /* Cincinnati Bengals - Orange & Black with stripes */
+        .theme-bengals {
+            --bg-primary: #0a0a0a; --bg-secondary: #FB4F14; --bg-tertiary: #ff6633;
+            --bg-input: #1a0a0a; --text-primary: #ffffff; --text-secondary: #000000;
+            --text-muted: #333333; --text-dimmed: #666666; --border: #000000;
+            --border-hover: #333333; --accent: #000000; --accent-hover: #1a1a1a;
+            --green: #FB4F14; --yellow: #FB4F14; --red: #FB4F14;
+        }
+
+        /* Cleveland Browns - Orange & Brown */
+        .theme-browns {
+            --bg-primary: #1a0f00; --bg-secondary: #311D00; --bg-tertiary: #4a2c00;
+            --bg-input: #2a1800; --text-primary: #ffffff; --text-secondary: #FF3C00;
+            --text-muted: #ff6633; --text-dimmed: #cc5500; --border: #FF3C00;
+            --border-hover: #ff5500; --accent: #FF3C00; --accent-hover: #ff5500;
+            --green: #FF3C00; --yellow: #FF3C00; --red: #FF3C00;
+        }
+
+        /* Dallas Cowboys - Navy & Silver */
+        .theme-cowboys {
+            --bg-primary: #001528; --bg-secondary: #003594; --bg-tertiary: #0044b8;
+            --bg-input: #001a33; --text-primary: #ffffff; --text-secondary: #869397;
+            --text-muted: #a0a5a8; --text-dimmed: #6a7073; --border: #869397;
+            --border-hover: #a0a5a8; --accent: #869397; --accent-hover: #a0a5a8;
+            --green: #869397; --yellow: #869397; --red: #003594;
+        }
+
+        /* Denver Broncos - Orange & Navy */
+        .theme-broncos {
+            --bg-primary: #001122; --bg-secondary: #002244; --bg-tertiary: #003366;
+            --bg-input: #001528; --text-primary: #ffffff; --text-secondary: #FB4F14;
+            --text-muted: #ff7744; --text-dimmed: #cc5500; --border: #FB4F14;
+            --border-hover: #ff6633; --accent: #FB4F14; --accent-hover: #ff6633;
+            --green: #FB4F14; --yellow: #FB4F14; --red: #FB4F14;
+        }
+
+        /* Detroit Lions - Honolulu Blue & Silver */
+        .theme-lions {
+            --bg-primary: #001a2a; --bg-secondary: #0076B6; --bg-tertiary: #0090d9;
+            --bg-input: #002233; --text-primary: #ffffff; --text-secondary: #B0B7BC;
+            --text-muted: #c9cfd3; --text-dimmed: #8a9297; --border: #B0B7BC;
+            --border-hover: #c9cfd3; --accent: #B0B7BC; --accent-hover: #c9cfd3;
+            --green: #B0B7BC; --yellow: #B0B7BC; --red: #0076B6;
+        }
+
+        /* Green Bay Packers - Green & Gold */
+        .theme-packers {
+            --bg-primary: #0f1a14; --bg-secondary: #203731; --bg-tertiary: #2d4a42;
+            --bg-input: #162820; --text-primary: #ffffff; --text-secondary: #FFB612;
+            --text-muted: #ffc94d; --text-dimmed: #cc9900; --border: #FFB612;
+            --border-hover: #ffc94d; --accent: #FFB612; --accent-hover: #ffc94d;
+            --green: #FFB612; --yellow: #FFB612; --red: #203731;
+        }
+
+        /* Houston Texans - Deep Steel Blue & Battle Red */
+        .theme-texans {
+            --bg-primary: #01101a; --bg-secondary: #03202F; --bg-tertiary: #0a3347;
+            --bg-input: #021520; --text-primary: #ffffff; --text-secondary: #A71930;
+            --text-muted: #cc2244; --text-dimmed: #881122; --border: #A71930;
+            --border-hover: #cc2244; --accent: #A71930; --accent-hover: #cc2244;
+            --green: #A71930; --yellow: #A71930; --red: #A71930;
+        }
+
+        /* Indianapolis Colts - Royal Blue & White */
+        .theme-colts {
+            --bg-primary: #001020; --bg-secondary: #002C5F; --bg-tertiary: #003d82;
+            --bg-input: #001528; --text-primary: #ffffff; --text-secondary: #99bbff;
+            --text-muted: #6699ff; --text-dimmed: #3366cc; --border: #ffffff;
+            --border-hover: #cccccc; --accent: #ffffff; --accent-hover: #e6e6e6;
+            --green: #A2AAAD; --yellow: #ffffff; --red: #002C5F;
+        }
+
+        /* Jacksonville Jaguars - Teal & Gold */
+        .theme-jaguars {
+            --bg-primary: #001a1f; --bg-secondary: #006778; --bg-tertiary: #008599;
+            --bg-input: #002228; --text-primary: #ffffff; --text-secondary: #9F792C;
+            --text-muted: #c99f44; --text-dimmed: #806020; --border: #9F792C;
+            --border-hover: #c99f44; --accent: #9F792C; --accent-hover: #c99f44;
+            --green: #9F792C; --yellow: #9F792C; --red: #006778;
+        }
+
+        /* Kansas City Chiefs - RED & GOLD - BOLD */
+        .theme-chiefs {
+            --bg-primary: #2a0a0f; --bg-secondary: #E31837; --bg-tertiary: #ff2244;
+            --bg-input: #3a0f15; --text-primary: #ffffff; --text-secondary: #FFB81C;
+            --text-muted: #ffcc55; --text-dimmed: #cc9900; --border: #FFB81C;
+            --border-hover: #ffcc55; --accent: #FFB81C; --accent-hover: #ffcc55;
+            --green: #FFB81C; --yellow: #FFB81C; --red: #ffffff;
+        }
+
+        /* Las Vegas Raiders - Silver & Black */
+        .theme-raiders {
+            --bg-primary: #0a0a0a; --bg-secondary: #1a1a1a; --bg-tertiary: #2a2a2a;
+            --bg-input: #0f0f0f; --text-primary: #A5ACAF; --text-secondary: #c9cfd3;
+            --text-muted: #8a9297; --text-dimmed: #606568; --border: #A5ACAF;
+            --border-hover: #c9cfd3; --accent: #A5ACAF; --accent-hover: #c9cfd3;
+            --green: #A5ACAF; --yellow: #A5ACAF; --red: #A5ACAF;
+        }
+
+        /* Los Angeles Chargers - Powder Blue & Gold */
+        .theme-chargers {
+            --bg-primary: #001a2a; --bg-secondary: #0080C6; --bg-tertiary: #0099e6;
+            --bg-input: #002233; --text-primary: #ffffff; --text-secondary: #FFC20E;
+            --text-muted: #ffdd55; --text-dimmed: #cc9900; --border: #FFC20E;
+            --border-hover: #ffdd55; --accent: #FFC20E; --accent-hover: #ffdd55;
+            --green: #FFC20E; --yellow: #FFC20E; --red: #0080C6;
+        }
+
+        /* Los Angeles Rams - Royal Blue & Sol (Yellow) */
+        .theme-rams {
+            --bg-primary: #001428; --bg-secondary: #003594; --bg-tertiary: #0044b8;
+            --bg-input: #001a33; --text-primary: #ffffff; --text-secondary: #FFA300;
+            --text-muted: #ffbb44; --text-dimmed: #cc8800; --border: #FFA300;
+            --border-hover: #ffbb44; --accent: #FFA300; --accent-hover: #ffbb44;
+            --green: #FFA300; --yellow: #FFA300; --red: #003594;
+        }
+
+        /* Miami Dolphins - Aqua & Orange */
+        .theme-dolphins {
+            --bg-primary: #001a1d; --bg-secondary: #008E97; --bg-tertiary: #00aab5;
+            --bg-input: #002225; --text-primary: #ffffff; --text-secondary: #FC4C02;
+            --text-muted: #ff7733; --text-dimmed: #cc4400; --border: #FC4C02;
+            --border-hover: #ff6622; --accent: #FC4C02; --accent-hover: #ff6622;
+            --green: #FC4C02; --yellow: #FC4C02; --red: #FC4C02;
+        }
+
+        /* Minnesota Vikings - Purple & Gold */
+        .theme-vikings {
+            --bg-primary: #1a0f28; --bg-secondary: #4F2683; --bg-tertiary: #6633aa;
+            --bg-input: #280f3a; --text-primary: #ffffff; --text-secondary: #FFC62F;
+            --text-muted: #ffdd66; --text-dimmed: #ccaa00; --border: #FFC62F;
+            --border-hover: #ffdd66; --accent: #FFC62F; --accent-hover: #ffdd66;
+            --green: #FFC62F; --yellow: #FFC62F; --red: #4F2683;
+        }
+
+        /* New England Patriots - Navy, Red & Silver */
+        .theme-patriots {
+            --bg-primary: #001122; --bg-secondary: #002244; --bg-tertiary: #003366;
+            --bg-input: #001528; --text-primary: #ffffff; --text-secondary: #C60C30;
+            --text-muted: #e62244; --text-dimmed: #991122; --border: #C60C30;
+            --border-hover: #e62244; --accent: #C60C30; --accent-hover: #e62244;
+            --green: #C60C30; --yellow: #B0B7BC; --red: #C60C30;
+        }
+
+        /* New Orleans Saints - BLACK & GOLD - BOLD */
+        .theme-saints {
+            --bg-primary: #0a0805; --bg-secondary: #101820; --bg-tertiary: #1a2530;
+            --bg-input: #0f0d0a; --text-primary: #D3BC8D; --text-secondary: #e8d9b8;
+            --text-muted: #c9b080; --text-dimmed: #9a8560; --border: #D3BC8D;
+            --border-hover: #e8d9b8; --accent: #D3BC8D; --accent-hover: #e8d9b8;
+            --green: #D3BC8D; --yellow: #D3BC8D; --red: #D3BC8D;
+        }
+
+        /* New York Giants - Blue & Red */
+        .theme-giants {
+            --bg-primary: #050d1a; --bg-secondary: #0B2265; --bg-tertiary: #0f2d82;
+            --bg-input: #081428; --text-primary: #ffffff; --text-secondary: #A71930;
+            --text-muted: #cc2244; --text-dimmed: #881122; --border: #A71930;
+            --border-hover: #cc2244; --accent: #A71930; --accent-hover: #cc2244;
+            --green: #A71930; --yellow: #A71930; --red: #A71930;
+        }
+
+        /* New York Jets - Green & White */
+        .theme-jets {
+            --bg-primary: #0a1a14; --bg-secondary: #125740; --bg-tertiary: #1a7357;
+            --bg-input: #0f2820; --text-primary: #ffffff; --text-secondary: #e6ffe6;
+            --text-muted: #99ff99; --text-dimmed: #66cc66; --border: #ffffff;
+            --border-hover: #e6e6e6; --accent: #ffffff; --accent-hover: #e6e6e6;
+            --green: #ffffff; --yellow: #ffffff; --red: #125740;
+        }
+
+        /* Philadelphia Eagles - Midnight Green & Silver */
+        .theme-eagles {
+            --bg-primary: #001a1d; --bg-secondary: #004C54; --bg-tertiary: #006670;
+            --bg-input: #002228; --text-primary: #ffffff; --text-secondary: #A5ACAF;
+            --text-muted: #c9cfd3; --text-dimmed: #8a9297; --border: #A5ACAF;
+            --border-hover: #c9cfd3; --accent: #A5ACAF; --accent-hover: #c9cfd3;
+            --green: #A5ACAF; --yellow: #A5ACAF; --red: #004C54;
+        }
+
+        /* Pittsburgh Steelers - BLACK & GOLD - BOLD */
+        .theme-steelers {
+            --bg-primary: #0a0800; --bg-secondary: #101820; --bg-tertiary: #1a2530;
+            --bg-input: #0f0d05; --text-primary: #FFB612; --text-secondary: #ffc94d;
+            --text-muted: #cc9900; --text-dimmed: #997700; --border: #FFB612;
+            --border-hover: #ffc94d; --accent: #FFB612; --accent-hover: #ffc94d;
+            --green: #FFB612; --yellow: #FFB612; --red: #FFB612;
+        }
+
+        /* San Francisco 49ers - RED & GOLD - BOLD */
+        .theme-49ers {
+            --bg-primary: #2a0a0a; --bg-secondary: #AA0000; --bg-tertiary: #cc0000;
+            --bg-input: #3a0f0f; --text-primary: #ffffff; --text-secondary: #B3995D;
+            --text-muted: #d4bb80; --text-dimmed: #997744; --border: #B3995D;
+            --border-hover: #d4bb80; --accent: #B3995D; --accent-hover: #d4bb80;
+            --green: #B3995D; --yellow: #B3995D; --red: #ffffff;
+        }
+
+        /* Seattle Seahawks - Navy & Action Green */
+        .theme-seahawks {
+            --bg-primary: #001122; --bg-secondary: #002244; --bg-tertiary: #003366;
+            --bg-input: #001528; --text-primary: #ffffff; --text-secondary: #69BE28;
+            --text-muted: #88dd44; --text-dimmed: #55aa22; --border: #69BE28;
+            --border-hover: #88dd44; --accent: #69BE28; --accent-hover: #88dd44;
+            --green: #69BE28; --yellow: #69BE28; --red: #002244;
+        }
+
+        /* Tampa Bay Buccaneers - Red & Pewter */
+        .theme-buccaneers {
+            --bg-primary: #1a0505; --bg-secondary: #D50A0A; --bg-tertiary: #f01010;
+            --bg-input: #280808; --text-primary: #ffffff; --text-secondary: #B1BABF;
+            --text-muted: #cfd5d9; --text-dimmed: #8a9297; --border: #B1BABF;
+            --border-hover: #cfd5d9; --accent: #B1BABF; --accent-hover: #cfd5d9;
+            --green: #B1BABF; --yellow: #B1BABF; --red: #ffffff;
+        }
+
+        /* Tennessee Titans - Navy & Titans Blue */
+        .theme-titans {
+            --bg-primary: #050d1a; --bg-secondary: #0C2340; --bg-tertiary: #132f52;
+            --bg-input: #081428; --text-primary: #ffffff; --text-secondary: #4B92DB;
+            --text-muted: #77b5f0; --text-dimmed: #3377bb; --border: #4B92DB;
+            --border-hover: #77b5f0; --accent: #4B92DB; --accent-hover: #77b5f0;
+            --green: #4B92DB; --yellow: #4B92DB; --red: #0C2340;
+        }
+
+        /* Washington Commanders - Burgundy & Gold */
+        .theme-commanders {
+            --bg-primary: #1a0808; --bg-secondary: #5A1414; --bg-tertiary: #731a1a;
+            --bg-input: #280f0f; --text-primary: #ffffff; --text-secondary: #FFB612;
+            --text-muted: #ffc94d; --text-dimmed: #cc9900; --border: #FFB612;
+            --border-hover: #ffc94d; --accent: #FFB612; --accent-hover: #ffc94d;
+            --green: #FFB612; --yellow: #FFB612; --red: #5A1414;
+        }
+
+        /* ========== SPECIAL THEME: BRADY BLUE ========== */
         .theme-brady {
             --bg-primary: #0a1628;
             --bg-secondary: #0f2240;
             --bg-tertiary: #163057;
             --bg-input: #071020;
             --text-primary: #e8f0ff;
-            --text-secondary: #a8c4e8;
-            --text-muted: #7a9cc4;
+            --text-secondary: #c9a227;
+            --text-muted: #a8c4e8;
             --text-dimmed: #4a6a8a;
-            --border: #1e3a5f;
-            --border-hover: #2a4a70;
+            --border: #c9a227;
+            --border-hover: #e0b830;
             --accent: #c9a227;
-            --accent-hover: #b8921f;
+            --accent-hover: #e0b830;
             --green: #c9a227;
             --yellow: #c9a227;
             --blue: #4a90d9;
+            --red: #c9a227;
         }
 
         * {
@@ -954,7 +1214,7 @@
             <h1>Problem Prioritizer</h1>
             <div class="header-actions">
                 <select id="colorTheme" class="theme-select" title="Color theme">
-                    <option value="">Default Purple</option>
+                    <option value="">Plain (No Color)</option>
                     <optgroup label="⭐ Special">
                         <option value="brady">🐐 Brady Blue</option>
                     </optgroup>
