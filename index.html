@@ -508,18 +508,18 @@
                 <div class="rating-group">
                     <label>Impact: How much will solving this improve things?</label>
                     <div class="slider-container">
-                        <input type="range" id="impactSlider" min="1" max="5" value="3">
-                        <span class="slider-value" id="impactValue">3</span>
+                        <input type="range" id="impactSlider" min="1" max="10" value="5">
+                        <span class="slider-value" id="impactValue">5</span>
                     </div>
-                    <p class="hint">1 = Minor improvement, 5 = Life-changing</p>
+                    <p class="hint">1 = Minor improvement, 10 = Life-changing</p>
                 </div>
                 <div class="rating-group">
                     <label>Effort: How hard is this to tackle?</label>
                     <div class="slider-container">
-                        <input type="range" id="effortSlider" min="1" max="5" value="3">
-                        <span class="slider-value" id="effortValue">3</span>
+                        <input type="range" id="effortSlider" min="1" max="10" value="5">
+                        <span class="slider-value" id="effortValue">5</span>
                     </div>
-                    <p class="hint">1 = Easy, 5 = Massive undertaking</p>
+                    <p class="hint">1 = Easy, 10 = Massive undertaking</p>
                 </div>
             </div>
             <button class="btn btn-primary" id="addProblem">Add Problem</button>
@@ -603,9 +603,9 @@
 
         // Get quadrant for a problem
         function getQuadrant(impact, effort) {
-            if (impact >= 3 && effort <= 3) return 'do-first';
-            if (impact >= 3 && effort > 3) return 'schedule';
-            if (impact < 3 && effort <= 3) return 'delegate';
+            if (impact >= 6 && effort <= 5) return 'do-first';
+            if (impact >= 6 && effort > 5) return 'schedule';
+            if (impact < 6 && effort <= 5) return 'delegate';
             return 'reconsider';
         }
 
@@ -639,10 +639,10 @@
             // Reset form
             titleInput.value = '';
             descInput.value = '';
-            impactSlider.value = 3;
-            effortSlider.value = 3;
-            impactValue.textContent = '3';
-            effortValue.textContent = '3';
+            impactSlider.value = 5;
+            effortSlider.value = 5;
+            impactValue.textContent = '5';
+            effortValue.textContent = '5';
             titleInput.focus();
         }
 
@@ -701,11 +701,11 @@
                         <div class="problem-meta">
                             <div class="meta-item">
                                 <span class="meta-label">Impact:</span>
-                                <span class="meta-value impact">${problem.impact}/5</span>
+                                <span class="meta-value impact">${problem.impact}/10</span>
                             </div>
                             <div class="meta-item">
                                 <span class="meta-label">Effort:</span>
-                                <span class="meta-value effort">${problem.effort}/5</span>
+                                <span class="meta-value effort">${problem.effort}/10</span>
                             </div>
                         </div>
                     </div>
