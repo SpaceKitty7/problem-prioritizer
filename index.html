@@ -40,6 +40,59 @@
             --border-hover: #d4d4d8;
         }
 
+        /* NFL Team Themes */
+        .theme-cardinals { --accent: #97233F; --accent-hover: #7a1c33; --green: #FFB612; }
+        .theme-falcons { --accent: #A71930; --accent-hover: #8a1528; --green: #A5ACAF; }
+        .theme-ravens { --accent: #241773; --accent-hover: #1a1156; --green: #9E7C0C; }
+        .theme-bills { --accent: #00338D; --accent-hover: #002a73; --green: #C60C30; }
+        .theme-panthers { --accent: #0085CA; --accent-hover: #006da6; --green: #BFC0BF; }
+        .theme-bears { --accent: #0B162A; --accent-hover: #1a2d4a; --green: #C83803; }
+        .theme-bengals { --accent: #FB4F14; --accent-hover: #d94310; --green: #000000; }
+        .theme-browns { --accent: #311D00; --accent-hover: #4a2c00; --green: #FF3C00; }
+        .theme-cowboys { --accent: #003594; --accent-hover: #002a73; --green: #869397; }
+        .theme-broncos { --accent: #FB4F14; --accent-hover: #d94310; --green: #002244; }
+        .theme-lions { --accent: #0076B6; --accent-hover: #005a8c; --green: #B0B7BC; }
+        .theme-packers { --accent: #203731; --accent-hover: #2d4a42; --green: #FFB612; }
+        .theme-texans { --accent: #03202F; --accent-hover: #0a3a52; --green: #A71930; }
+        .theme-colts { --accent: #002C5F; --accent-hover: #003d82; --green: #A2AAAD; }
+        .theme-jaguars { --accent: #006778; --accent-hover: #008599; --green: #9F792C; }
+        .theme-chiefs { --accent: #E31837; --accent-hover: #c4142f; --green: #FFB81C; }
+        .theme-raiders { --accent: #000000; --accent-hover: #1a1a1a; --green: #A5ACAF; }
+        .theme-chargers { --accent: #0080C6; --accent-hover: #006ba6; --green: #FFC20E; }
+        .theme-rams { --accent: #003594; --accent-hover: #002a73; --green: #FFA300; }
+        .theme-dolphins { --accent: #008E97; --accent-hover: #00757d; --green: #FC4C02; }
+        .theme-vikings { --accent: #4F2683; --accent-hover: #3d1d66; --green: #FFC62F; }
+        .theme-patriots { --accent: #002244; --accent-hover: #003366; --green: #C60C30; }
+        .theme-saints { --accent: #101820; --accent-hover: #1a2630; --green: #D3BC8D; }
+        .theme-giants { --accent: #0B2265; --accent-hover: #0f2d82; --green: #A71930; }
+        .theme-jets { --accent: #125740; --accent-hover: #1a7357; --green: #000000; }
+        .theme-eagles { --accent: #004C54; --accent-hover: #006670; --green: #A5ACAF; }
+        .theme-steelers { --accent: #FFB612; --accent-hover: #e6a410; --green: #101820; --text-primary: #101820; --bg-primary: #FFB612; --bg-secondary: #e6a410; --bg-tertiary: #cca00e; --border: #cca00e; }
+        .theme-49ers { --accent: #AA0000; --accent-hover: #8a0000; --green: #B3995D; }
+        .theme-seahawks { --accent: #002244; --accent-hover: #003366; --green: #69BE28; }
+        .theme-buccaneers { --accent: #D50A0A; --accent-hover: #b30808; --green: #B1BABF; }
+        .theme-titans { --accent: #0C2340; --accent-hover: #132f52; --green: #4B92DB; }
+        .theme-commanders { --accent: #5A1414; --accent-hover: #731a1a; --green: #FFB612; }
+
+        /* Special Theme: Brady Blue */
+        .theme-brady {
+            --bg-primary: #0a1628;
+            --bg-secondary: #0f2240;
+            --bg-tertiary: #163057;
+            --bg-input: #071020;
+            --text-primary: #e8f0ff;
+            --text-secondary: #a8c4e8;
+            --text-muted: #7a9cc4;
+            --text-dimmed: #4a6a8a;
+            --border: #1e3a5f;
+            --border-hover: #2a4a70;
+            --accent: #c9a227;
+            --accent-hover: #b8921f;
+            --green: #c9a227;
+            --yellow: #c9a227;
+            --blue: #4a90d9;
+        }
+
         * {
             box-sizing: border-box;
             margin: 0;
@@ -99,6 +152,33 @@
         .icon-btn:hover {
             border-color: var(--border-hover);
             color: var(--text-primary);
+        }
+
+        .theme-select {
+            padding: 8px 12px;
+            border-radius: 10px;
+            border: 1px solid var(--border);
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+            font-size: 0.85rem;
+            font-family: inherit;
+            cursor: pointer;
+            max-width: 180px;
+        }
+
+        .theme-select:focus {
+            outline: none;
+            border-color: var(--accent);
+        }
+
+        .theme-select option {
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+        }
+
+        .theme-select optgroup {
+            font-weight: 600;
+            color: var(--text-muted);
         }
 
         .subtitle {
@@ -873,7 +953,61 @@
         <div class="header">
             <h1>Problem Prioritizer</h1>
             <div class="header-actions">
-                <button class="icon-btn" id="themeToggle" title="Toggle theme">🌙</button>
+                <select id="colorTheme" class="theme-select" title="Color theme">
+                    <option value="">Default Purple</option>
+                    <optgroup label="⭐ Special">
+                        <option value="brady">🐐 Brady Blue</option>
+                    </optgroup>
+                    <optgroup label="🏈 AFC East">
+                        <option value="bills">Buffalo Bills</option>
+                        <option value="dolphins">Miami Dolphins</option>
+                        <option value="patriots">New England Patriots</option>
+                        <option value="jets">New York Jets</option>
+                    </optgroup>
+                    <optgroup label="🏈 AFC North">
+                        <option value="ravens">Baltimore Ravens</option>
+                        <option value="bengals">Cincinnati Bengals</option>
+                        <option value="browns">Cleveland Browns</option>
+                        <option value="steelers">Pittsburgh Steelers</option>
+                    </optgroup>
+                    <optgroup label="🏈 AFC South">
+                        <option value="texans">Houston Texans</option>
+                        <option value="colts">Indianapolis Colts</option>
+                        <option value="jaguars">Jacksonville Jaguars</option>
+                        <option value="titans">Tennessee Titans</option>
+                    </optgroup>
+                    <optgroup label="🏈 AFC West">
+                        <option value="broncos">Denver Broncos</option>
+                        <option value="chiefs">Kansas City Chiefs</option>
+                        <option value="raiders">Las Vegas Raiders</option>
+                        <option value="chargers">Los Angeles Chargers</option>
+                    </optgroup>
+                    <optgroup label="🏈 NFC East">
+                        <option value="cowboys">Dallas Cowboys</option>
+                        <option value="giants">New York Giants</option>
+                        <option value="eagles">Philadelphia Eagles</option>
+                        <option value="commanders">Washington Commanders</option>
+                    </optgroup>
+                    <optgroup label="🏈 NFC North">
+                        <option value="bears">Chicago Bears</option>
+                        <option value="lions">Detroit Lions</option>
+                        <option value="packers">Green Bay Packers</option>
+                        <option value="vikings">Minnesota Vikings</option>
+                    </optgroup>
+                    <optgroup label="🏈 NFC South">
+                        <option value="falcons">Atlanta Falcons</option>
+                        <option value="panthers">Carolina Panthers</option>
+                        <option value="saints">New Orleans Saints</option>
+                        <option value="buccaneers">Tampa Bay Buccaneers</option>
+                    </optgroup>
+                    <optgroup label="🏈 NFC West">
+                        <option value="cardinals">Arizona Cardinals</option>
+                        <option value="rams">Los Angeles Rams</option>
+                        <option value="49ers">San Francisco 49ers</option>
+                        <option value="seahawks">Seattle Seahawks</option>
+                    </optgroup>
+                </select>
+                <button class="icon-btn" id="themeToggle" title="Toggle light/dark">🌙</button>
                 <button class="icon-btn" id="exportBtn" title="Export data">📤</button>
                 <button class="icon-btn" id="importBtn" title="Import data">📥</button>
             </div>
@@ -1118,18 +1252,45 @@
         const closeModal = document.getElementById('closeModal');
         const saveEdit = document.getElementById('saveEdit');
 
-        // Initialize theme
+        // Color theme dropdown
+        const colorTheme = document.getElementById('colorTheme');
+
+        // Initialize light/dark theme
         if (localStorage.getItem('theme') === 'light') {
             document.body.classList.add('light-mode');
             themeToggle.textContent = '☀️';
         }
 
-        // Theme toggle
+        // Initialize color theme
+        const savedColorTheme = localStorage.getItem('colorTheme');
+        if (savedColorTheme) {
+            document.body.classList.add('theme-' + savedColorTheme);
+            colorTheme.value = savedColorTheme;
+        }
+
+        // Light/Dark theme toggle
         themeToggle.addEventListener('click', () => {
             document.body.classList.toggle('light-mode');
             const isLight = document.body.classList.contains('light-mode');
             themeToggle.textContent = isLight ? '☀️' : '🌙';
             localStorage.setItem('theme', isLight ? 'light' : 'dark');
+        });
+
+        // Color theme change
+        colorTheme.addEventListener('change', () => {
+            // Remove all theme classes
+            document.body.className = document.body.className
+                .split(' ')
+                .filter(c => !c.startsWith('theme-'))
+                .join(' ');
+
+            // Add new theme class
+            if (colorTheme.value) {
+                document.body.classList.add('theme-' + colorTheme.value);
+                localStorage.setItem('colorTheme', colorTheme.value);
+            } else {
+                localStorage.removeItem('colorTheme');
+            }
         });
 
         // Slider updates
