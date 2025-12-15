@@ -1,0 +1,767 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Problem Prioritizer</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #0a0a0b;
+            min-height: 100vh;
+            color: #fafafa;
+            padding: 24px;
+            line-height: 1.5;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 8px;
+            color: #fff;
+            font-size: 2rem;
+            font-weight: 700;
+            letter-spacing: -0.025em;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #71717a;
+            margin-bottom: 32px;
+            font-size: 0.925rem;
+            font-weight: 400;
+        }
+
+        /* Input Form */
+        .add-form {
+            background: #18181b;
+            border-radius: 16px;
+            padding: 28px;
+            margin-bottom: 32px;
+            border: 1px solid #27272a;
+        }
+
+        .form-row {
+            display: flex;
+            gap: 16px;
+            margin-bottom: 16px;
+            flex-wrap: wrap;
+        }
+
+        .form-group {
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            color: #a1a1aa;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .form-group input, .form-group textarea {
+            width: 100%;
+            padding: 14px 16px;
+            border: 1px solid #27272a;
+            border-radius: 10px;
+            background: #09090b;
+            color: #fafafa;
+            font-size: 0.95rem;
+            font-family: inherit;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 60px;
+        }
+
+        .form-group input:focus, .form-group textarea:focus {
+            outline: none;
+            border-color: #a855f7;
+            box-shadow: 0 0 0 3px rgba(168, 85, 247, 0.15);
+        }
+
+        .form-group input::placeholder, .form-group textarea::placeholder {
+            color: #52525b;
+        }
+
+        /* Slider Ratings */
+        .rating-section {
+            display: flex;
+            gap: 32px;
+            margin-bottom: 24px;
+            flex-wrap: wrap;
+        }
+
+        .rating-group {
+            flex: 1;
+            min-width: 250px;
+        }
+
+        .rating-group label {
+            display: block;
+            margin-bottom: 10px;
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: #e4e4e7;
+        }
+
+        .rating-group .hint {
+            font-size: 0.75rem;
+            color: #52525b;
+            margin-top: 8px;
+        }
+
+        .slider-container {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .slider-container input[type="range"] {
+            flex: 1;
+            height: 6px;
+            -webkit-appearance: none;
+            background: #27272a;
+            border-radius: 100px;
+            outline: none;
+        }
+
+        .slider-container input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #a855f7;
+            cursor: pointer;
+            box-shadow: 0 0 0 4px rgba(168, 85, 247, 0.2);
+            transition: box-shadow 0.2s;
+        }
+
+        .slider-container input[type="range"]::-webkit-slider-thumb:hover {
+            box-shadow: 0 0 0 6px rgba(168, 85, 247, 0.3);
+        }
+
+        .slider-value {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #a855f7;
+            min-width: 32px;
+            text-align: center;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 10px;
+            font-size: 0.925rem;
+            font-weight: 600;
+            font-family: inherit;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-primary {
+            background: #a855f7;
+            color: #fff;
+        }
+
+        .btn-primary:hover {
+            background: #9333ea;
+            transform: translateY(-1px);
+            box-shadow: 0 8px 24px rgba(168, 85, 247, 0.3);
+        }
+
+        .btn-danger {
+            background: transparent;
+            border: 1px solid #3f3f46;
+            color: #a1a1aa;
+            padding: 8px 14px;
+            font-size: 0.8rem;
+        }
+
+        .btn-danger:hover {
+            background: #27272a;
+            color: #ef4444;
+            border-color: #ef4444;
+        }
+
+        /* Matrix Visualization */
+        .matrix-section {
+            margin-bottom: 32px;
+        }
+
+        .matrix-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .matrix-header h2 {
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: #fafafa;
+            letter-spacing: -0.01em;
+        }
+
+        .view-toggle {
+            display: flex;
+            gap: 4px;
+            background: #18181b;
+            padding: 4px;
+            border-radius: 10px;
+        }
+
+        .view-toggle button {
+            padding: 8px 16px;
+            border: none;
+            background: transparent;
+            color: #71717a;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            font-weight: 500;
+            font-family: inherit;
+            transition: all 0.2s;
+        }
+
+        .view-toggle button.active {
+            background: #27272a;
+            color: #fafafa;
+        }
+
+        .view-toggle button:hover:not(.active) {
+            color: #a1a1aa;
+        }
+
+        /* Matrix Grid */
+        .matrix-grid {
+            display: grid;
+            grid-template-columns: 40px 1fr 1fr;
+            grid-template-rows: 1fr 1fr 40px;
+            gap: 12px;
+            height: 400px;
+            margin-bottom: 20px;
+        }
+
+        .matrix-label {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+            font-weight: 600;
+            color: #52525b;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .matrix-label.vertical {
+            writing-mode: vertical-rl;
+            transform: rotate(180deg);
+        }
+
+        .matrix-quadrant {
+            background: #18181b;
+            border-radius: 12px;
+            padding: 14px;
+            border: 1px solid #27272a;
+            overflow-y: auto;
+        }
+
+        .matrix-quadrant h3 {
+            font-size: 0.7rem;
+            font-weight: 600;
+            color: #52525b;
+            margin-bottom: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .quadrant-do-first {
+            border-color: rgba(34, 197, 94, 0.25);
+            background: linear-gradient(135deg, rgba(34, 197, 94, 0.08) 0%, #18181b 100%);
+        }
+
+        .quadrant-do-first h3 { color: #4ade80; }
+
+        .quadrant-schedule {
+            border-color: rgba(168, 85, 247, 0.25);
+            background: linear-gradient(135deg, rgba(168, 85, 247, 0.08) 0%, #18181b 100%);
+        }
+
+        .quadrant-schedule h3 { color: #c084fc; }
+
+        .quadrant-delegate {
+            border-color: rgba(251, 191, 36, 0.25);
+            background: linear-gradient(135deg, rgba(251, 191, 36, 0.08) 0%, #18181b 100%);
+        }
+
+        .quadrant-delegate h3 { color: #fcd34d; }
+
+        .quadrant-reconsider {
+            border-color: #27272a;
+            background: #18181b;
+        }
+
+        .quadrant-reconsider h3 { color: #52525b; }
+
+        .matrix-item {
+            background: #09090b;
+            padding: 10px 12px;
+            border-radius: 8px;
+            margin-bottom: 8px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: 1px solid transparent;
+        }
+
+        .matrix-item:hover {
+            border-color: #3f3f46;
+            transform: translateX(2px);
+        }
+
+        /* Priority List */
+        .problem-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .problem-card {
+            background: #18181b;
+            border-radius: 12px;
+            padding: 20px;
+            border: 1px solid #27272a;
+            display: flex;
+            gap: 16px;
+            align-items: flex-start;
+            transition: all 0.2s;
+        }
+
+        .problem-card:hover {
+            border-color: #3f3f46;
+            transform: translateX(4px);
+        }
+
+        .priority-rank {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #71717a;
+            min-width: 44px;
+            height: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #27272a;
+            border-radius: 10px;
+        }
+
+        .priority-rank.top-3 {
+            background: linear-gradient(135deg, #a855f7 0%, #6366f1 100%);
+            color: #fff;
+        }
+
+        .problem-content {
+            flex: 1;
+        }
+
+        .problem-title {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #fafafa;
+            margin-bottom: 4px;
+            letter-spacing: -0.01em;
+        }
+
+        .problem-description {
+            font-size: 0.875rem;
+            color: #71717a;
+            margin-bottom: 12px;
+            line-height: 1.5;
+        }
+
+        .problem-meta {
+            display: flex;
+            gap: 16px;
+            font-size: 0.8rem;
+        }
+
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .meta-label {
+            color: #52525b;
+        }
+
+        .meta-value {
+            color: #a1a1aa;
+            font-weight: 600;
+        }
+
+        .meta-value.impact {
+            color: #4ade80;
+        }
+
+        .meta-value.effort {
+            color: #fcd34d;
+        }
+
+        .problem-actions {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            align-items: flex-end;
+        }
+
+        .priority-score {
+            background: #27272a;
+            color: #a855f7;
+            padding: 8px 14px;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            text-align: center;
+        }
+
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 80px 20px;
+            color: #52525b;
+        }
+
+        .empty-state h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #71717a;
+        }
+
+        .empty-state p {
+            font-size: 0.9rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 600px) {
+            .rating-section {
+                flex-direction: column;
+            }
+
+            .matrix-grid {
+                height: 500px;
+            }
+
+            .problem-card {
+                flex-direction: column;
+            }
+
+            .priority-rank {
+                align-self: flex-start;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Problem Prioritizer</h1>
+        <p class="subtitle">Add your problems, rate their impact and effort, and see what to tackle first.</p>
+
+        <!-- Add Problem Form -->
+        <div class="add-form">
+            <div class="form-row">
+                <div class="form-group" style="flex: 2;">
+                    <label for="problemTitle">What's the problem?</label>
+                    <input type="text" id="problemTitle" placeholder="e.g., Fix login bug, Learn new framework...">
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="problemDescription">Details (optional)</label>
+                    <textarea id="problemDescription" placeholder="Any additional context..."></textarea>
+                </div>
+            </div>
+            <div class="rating-section">
+                <div class="rating-group">
+                    <label>Impact: How much will solving this improve things?</label>
+                    <div class="slider-container">
+                        <input type="range" id="impactSlider" min="1" max="5" value="3">
+                        <span class="slider-value" id="impactValue">3</span>
+                    </div>
+                    <p class="hint">1 = Minor improvement, 5 = Life-changing</p>
+                </div>
+                <div class="rating-group">
+                    <label>Effort: How hard is this to tackle?</label>
+                    <div class="slider-container">
+                        <input type="range" id="effortSlider" min="1" max="5" value="3">
+                        <span class="slider-value" id="effortValue">3</span>
+                    </div>
+                    <p class="hint">1 = Easy, 5 = Massive undertaking</p>
+                </div>
+            </div>
+            <button class="btn btn-primary" id="addProblem">Add Problem</button>
+        </div>
+
+        <!-- View Toggle and Matrix/List -->
+        <div class="matrix-section">
+            <div class="matrix-header">
+                <h2>Your Problems</h2>
+                <div class="view-toggle">
+                    <button id="viewMatrix" class="active">Matrix</button>
+                    <button id="viewList">Priority List</button>
+                </div>
+            </div>
+
+            <!-- Matrix View -->
+            <div id="matrixView" class="matrix-grid">
+                <div class="matrix-label vertical">HIGH IMPACT</div>
+                <div class="matrix-quadrant quadrant-do-first" id="quadrant-do-first">
+                    <h3>Do First</h3>
+                </div>
+                <div class="matrix-quadrant quadrant-schedule" id="quadrant-schedule">
+                    <h3>Schedule</h3>
+                </div>
+                <div class="matrix-label vertical">LOW IMPACT</div>
+                <div class="matrix-quadrant quadrant-delegate" id="quadrant-delegate">
+                    <h3>Quick Wins</h3>
+                </div>
+                <div class="matrix-quadrant quadrant-reconsider" id="quadrant-reconsider">
+                    <h3>Reconsider</h3>
+                </div>
+                <div></div>
+                <div class="matrix-label">LOW EFFORT</div>
+                <div class="matrix-label">HIGH EFFORT</div>
+            </div>
+
+            <!-- List View -->
+            <div id="listView" class="problem-list" style="display: none;"></div>
+
+            <!-- Empty State -->
+            <div id="emptyState" class="empty-state">
+                <h3>No problems yet</h3>
+                <p>Add a problem above to get started!</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // State
+        let problems = JSON.parse(localStorage.getItem('problems')) || [];
+        let currentView = 'matrix';
+
+        // DOM Elements
+        const titleInput = document.getElementById('problemTitle');
+        const descInput = document.getElementById('problemDescription');
+        const impactSlider = document.getElementById('impactSlider');
+        const effortSlider = document.getElementById('effortSlider');
+        const impactValue = document.getElementById('impactValue');
+        const effortValue = document.getElementById('effortValue');
+        const addBtn = document.getElementById('addProblem');
+        const matrixView = document.getElementById('matrixView');
+        const listView = document.getElementById('listView');
+        const emptyState = document.getElementById('emptyState');
+        const viewMatrixBtn = document.getElementById('viewMatrix');
+        const viewListBtn = document.getElementById('viewList');
+
+        // Update slider display
+        impactSlider.addEventListener('input', () => {
+            impactValue.textContent = impactSlider.value;
+        });
+
+        effortSlider.addEventListener('input', () => {
+            effortValue.textContent = effortSlider.value;
+        });
+
+        // Calculate priority score (higher is better)
+        function calculatePriority(impact, effort) {
+            // Impact weighted more, effort reduces priority
+            return ((impact * 2) / effort).toFixed(2);
+        }
+
+        // Get quadrant for a problem
+        function getQuadrant(impact, effort) {
+            if (impact >= 3 && effort <= 3) return 'do-first';
+            if (impact >= 3 && effort > 3) return 'schedule';
+            if (impact < 3 && effort <= 3) return 'delegate';
+            return 'reconsider';
+        }
+
+        // Save to localStorage
+        function saveProblems() {
+            localStorage.setItem('problems', JSON.stringify(problems));
+        }
+
+        // Add problem
+        function addProblem() {
+            const title = titleInput.value.trim();
+            if (!title) {
+                titleInput.focus();
+                return;
+            }
+
+            const problem = {
+                id: Date.now(),
+                title,
+                description: descInput.value.trim(),
+                impact: parseInt(impactSlider.value),
+                effort: parseInt(effortSlider.value),
+                priority: calculatePriority(impactSlider.value, effortSlider.value),
+                createdAt: new Date().toISOString()
+            };
+
+            problems.push(problem);
+            saveProblems();
+            render();
+
+            // Reset form
+            titleInput.value = '';
+            descInput.value = '';
+            impactSlider.value = 3;
+            effortSlider.value = 3;
+            impactValue.textContent = '3';
+            effortValue.textContent = '3';
+            titleInput.focus();
+        }
+
+        // Delete problem
+        function deleteProblem(id) {
+            problems = problems.filter(p => p.id !== id);
+            saveProblems();
+            render();
+        }
+
+        // Render matrix view
+        function renderMatrix() {
+            const quadrants = {
+                'do-first': document.getElementById('quadrant-do-first'),
+                'schedule': document.getElementById('quadrant-schedule'),
+                'delegate': document.getElementById('quadrant-delegate'),
+                'reconsider': document.getElementById('quadrant-reconsider')
+            };
+
+            // Clear quadrants (keep headers)
+            Object.values(quadrants).forEach(q => {
+                const header = q.querySelector('h3');
+                q.innerHTML = '';
+                q.appendChild(header);
+            });
+
+            problems.forEach(problem => {
+                const quadrant = getQuadrant(problem.impact, problem.effort);
+                const item = document.createElement('div');
+                item.className = 'matrix-item';
+                item.textContent = problem.title;
+                item.onclick = () => {
+                    if (confirm(`Delete "${problem.title}"?`)) {
+                        deleteProblem(problem.id);
+                    }
+                };
+                quadrants[quadrant].appendChild(item);
+            });
+        }
+
+        // Render list view
+        function renderList() {
+            listView.innerHTML = '';
+
+            // Sort by priority (highest first)
+            const sorted = [...problems].sort((a, b) => b.priority - a.priority);
+
+            sorted.forEach((problem, index) => {
+                const card = document.createElement('div');
+                card.className = 'problem-card';
+                card.innerHTML = `
+                    <div class="priority-rank ${index < 3 ? 'top-3' : ''}">#${index + 1}</div>
+                    <div class="problem-content">
+                        <div class="problem-title">${escapeHtml(problem.title)}</div>
+                        ${problem.description ? `<div class="problem-description">${escapeHtml(problem.description)}</div>` : ''}
+                        <div class="problem-meta">
+                            <div class="meta-item">
+                                <span class="meta-label">Impact:</span>
+                                <span class="meta-value impact">${problem.impact}/5</span>
+                            </div>
+                            <div class="meta-item">
+                                <span class="meta-label">Effort:</span>
+                                <span class="meta-value effort">${problem.effort}/5</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="problem-actions">
+                        <div class="priority-score">${problem.priority}</div>
+                        <button class="btn btn-danger" onclick="deleteProblem(${problem.id})">Delete</button>
+                    </div>
+                `;
+                listView.appendChild(card);
+            });
+        }
+
+        // Escape HTML
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        // Main render
+        function render() {
+            const hasProblems = problems.length > 0;
+
+            emptyState.style.display = hasProblems ? 'none' : 'block';
+            matrixView.style.display = hasProblems && currentView === 'matrix' ? 'grid' : 'none';
+            listView.style.display = hasProblems && currentView === 'list' ? 'flex' : 'none';
+
+            if (hasProblems) {
+                renderMatrix();
+                renderList();
+            }
+        }
+
+        // View toggle
+        viewMatrixBtn.addEventListener('click', () => {
+            currentView = 'matrix';
+            viewMatrixBtn.classList.add('active');
+            viewListBtn.classList.remove('active');
+            render();
+        });
+
+        viewListBtn.addEventListener('click', () => {
+            currentView = 'list';
+            viewListBtn.classList.add('active');
+            viewMatrixBtn.classList.remove('active');
+            render();
+        });
+
+        // Event listeners
+        addBtn.addEventListener('click', addProblem);
+        titleInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') addProblem();
+        });
+
+        // Initial render
+        render();
+    </script>
+</body>
+</html>
